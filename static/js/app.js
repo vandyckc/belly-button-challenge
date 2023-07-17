@@ -6,32 +6,6 @@ d3.json(url).then(function(data) {
   console.log(data);
 });
 
-// Initialize the dashboard
-function init() {
-
-    // Use D3 to select the dropdown menu
-    let dropdownMenu = d3.select("#selDataset");
-
-    // Use D3 to get sample names and populate the drop-down selector
-    d3.json(url).then((data) => {
-        let names = data.names;
-        names.forEach((id) => {
-            dropdownMenu.append("option")
-            .text(id)
-            .property("value",id);
-        });
-
-        // Set the first sample from the list
-        let sampleOne = names[0];
-
-        // Build the initial plots
-        createMetadata(sampleOne);
-        createBarChart(sampleOne);
-        createBubbleChart(sampleOne);
-
-    });
-};
-
 // Function that populates metadata info
 function createMetadata(sample) {
 
@@ -119,6 +93,30 @@ function createBubbleChart(sample) {
         };
         // Plot the bubble chart
         Plotly.newPlot("bubble", [trace1], layout)
+    });
+};
+
+// Initialize the dashboard
+function init() {
+
+    // Use D3 to select the dropdown menu
+    let dropdownMenu = d3.select("#selDataset");
+
+    // Use D3 to get sample names and populate the drop-down selector
+    d3.json(url).then((data) => {
+        let names = data.names;
+        names.forEach((id) => {
+            dropdownMenu.append("option").text(id).property("value",id);
+        });
+
+        // Set the first sample from the list
+        let sampleOne = names[0];
+
+        // Build the initial plots
+        createMetadata(sampleOne);
+        createBarChart(sampleOne);
+        createBubbleChart(sampleOne);
+
     });
 };
 
